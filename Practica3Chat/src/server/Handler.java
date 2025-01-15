@@ -28,9 +28,21 @@ public class Handler implements Runnable{
 			User user = new User(this, in.readUTF());
 			
 			while (true) {
-				out.writeUTF("Comando: ");
 				chat.runCommand(in.readUTF());
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendMessage(String message) {
+		try (
+				DataInputStream in = new DataInputStream(sc.getInputStream());
+				DataOutputStream out = new DataOutputStream(sc.getOutputStream());
+			){
+			
+			out.writeUTF(message);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

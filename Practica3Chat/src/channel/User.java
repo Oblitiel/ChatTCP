@@ -13,7 +13,7 @@ public class User {
 	public User(Handler handler, String nick) {
 		this.nick = nick;
 		this.handler = handler;
-		Chat.getInstance().getUserList().add(this);
+		Chat.getInstance().getUserList().put(nick, this);
 	}
 
 	public String getNick() {return nick;}
