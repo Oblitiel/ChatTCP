@@ -18,7 +18,7 @@ public class Server {
 			System.out.println("Servidor inicializado");
 			
 			while (true) {
-				pool.execute(new Handler(servidor.accept()));
+				pool.execute(new ServerHandler(servidor.accept()));
 			}
 		} catch (IOException e) {
 			pool.shutdown();

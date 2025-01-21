@@ -5,13 +5,15 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import channel.User;
+import chat.Chat;
+import chat.User;
 
-public class Handler implements Runnable{
+public class ServerHandler implements Runnable{
 	private final Socket sc;
 	private final Chat chat = Chat.getInstance();
+	User user = null;
 
-	public Handler(Socket sc) {
+	public ServerHandler(Socket sc) {
 		super();
 		this.sc = sc;
 	}
@@ -25,10 +27,12 @@ public class Handler implements Runnable{
 			
 			System.out.println("Cliente conectado");
 			
-			User user = new User(this, in.readUTF());
+			user = chat.createUser(in.readUTF(), this);
 			
 			while (true) {
-				chat.runCommand(in.readUTF());
+				String line = in.readUTF();
+				System.out.println(user.getNick() + ": " + line);
+				chat.runCommand(line, user);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -36,12 +40,11 @@ public class Handler implements Runnable{
 	}
 	
 	public void sendMessage(String message) {
-		try (
-				DataInputStream in = new DataInputStream(sc.getInputStream());
-				DataOutputStream out = new DataOutputStream(sc.getOutputStream());
-			){
+		try {
+			DataOutputStream out = new DataOutputStream(sc.getOutputStream());
 			
 			out.writeUTF(message);
+			out.writeUTF(user.toString());
 			
 		} catch (IOException e) {
 			e.printStackTrace();

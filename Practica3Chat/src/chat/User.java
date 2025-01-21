@@ -1,28 +1,26 @@
-package channel;
+package chat;
 
 import java.util.ArrayList;
 
-import server.Chat;
-import server.Handler;
+import server.ServerHandler;
 
 public class User {
 	private String nick;
-	private Handler handler;
+	private ServerHandler handler;
 	private ArrayList<Channel> channelsSub = new ArrayList<>();
 	
-	public User(Handler handler, String nick) {
+	User(ServerHandler handler, String nick) {
 		this.nick = nick;
 		this.handler = handler;
-		Chat.getInstance().getUserList().put(nick, this);
 	}
 
 	public String getNick() {return nick;}
 	public ArrayList<Channel> getChanelsSub() {return channelsSub;}
-	public Handler getHandler() {return handler;}
+	public ServerHandler getHandler() {return handler;}
 
 	public void setNick(String nick) {this.nick = nick;}
 	public void setChanelsSub(ArrayList<Channel> chanelsSub) {this.channelsSub = chanelsSub;}
-	public void setHandler(Handler handler) {this.handler = handler;}
+	public void setHandler(ServerHandler handler) {this.handler = handler;}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -30,7 +28,7 @@ public class User {
 			return false;
 		}
 		User user = (User) obj;
-		if (user.getNick() != this.getNick()) {
+		if (user.getNick().toLowerCase() != this.getNick().toLowerCase()) {
 			return false;
 		}
 		return true;

@@ -1,19 +1,15 @@
-package channel;
+package chat;
 
 import java.util.ArrayList;
-
-import server.Chat;
 
 public class Channel {
 	private String name;
 	private ArrayList<User> users;
 	
 	
-	public Channel(String name, ArrayList<User> users) {
+	public Channel(String name) {
 		super();
 		this.name = name;
-		this.users = users;
-		Chat.getInstance().getChannelList().put(name, this);
 	}
 	
 	public String getName() {return name;}
