@@ -26,8 +26,20 @@ public class ServerHandler implements Runnable{
 			){
 			
 			System.out.println("Cliente conectado");
+			// Registro de usuario
+			String userName = "";
+			do {
+				out.writeUTF("Introduzca un nombre de usuario: ");
+				userName = in.readUTF();
+				if (chat.getUser(userName) != null) {
+					out.writeUTF("Nombre de usuario no disponible");
+				}
+				
+			} while (chat.getUser(userName) != null);
 			
-			user = chat.createUser(in.readUTF(), this);
+			out.writeUTF("Usuario Registrado con exito");
+			user = chat.createUser(userName, this);
+			System.out.println(chat.getUserList());
 			
 			while (true) {
 				String line = in.readUTF();

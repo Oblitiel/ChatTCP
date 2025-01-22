@@ -19,11 +19,13 @@ public class Chat {
 		for (Channel channel: channelList) if (channel.getName().equals(name)) return channel;
 		return null;
 	}
-	
 	public static Chat getInstance() {
 		if (instance == null) instance = new Chat();
 		return instance;
 	}
+	
+	public HashSet<User> getUserList() {return userList;}
+	public HashSet<Channel> getChannelList() {return channelList;}
 	
 	public User createUser(String nick, ServerHandler handler) {
 		User newUser = new User(handler, nick);
@@ -45,18 +47,18 @@ public class Chat {
 		case "#msgbroadcast":
 			for (User user : userList) {
 				if (user != sender) {
-					user.getHandler().sendMessage(String.format("From %s: %s", sender.getNick(), segCmd[1]));
+					user.getHandler().sendMessage(String.format("From %s: %s", sender.getNick(), reformMessage(segCmd, 1)));
 				}
 			}
 			break;
 		case "#msg":
-			getUser(segCmd[1]).getHandler().sendMessage(String.format("From %s: %s", sender.getNick(), segCmd[2]));
+			getUser(segCmd[1]).getHandler().sendMessage(String.format("From %s: %s", sender.getNick(), reformMessage(segCmd, 2)));
 			break;
 		
 		case "#msgcanal":
 			for (User user : getChannel(segCmd[1]).getUsers()) {
 				if (user != sender) {
-					user.getHandler().sendMessage(String.format("From %s: %s", sender.getNick(), segCmd[2]));
+					user.getHandler().sendMessage(String.format("From %s: %s", sender.getNick(), reformMessage(segCmd, 2)));
 				}
 			}
 			break;
@@ -80,5 +82,13 @@ public class Chat {
 		default:
 			break;
 		}
+	}
+	
+	private String reformMessage(String[] segCmd, int initialIndx) {
+		String message = "";
+		for (int i = initialIndx; i < segCmd.length; i++) {
+			message += segCmd[i] + " ";
+		}
+		return message;
 	}
 }

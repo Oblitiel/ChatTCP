@@ -10,8 +10,6 @@ public class Cliente {
 	final static String HOST = "127.0.0.1";
 	final static int PORT = 5000;
 	
-	private String nick;
-	
 	public static void main(String[] args) {
 		try {
 			Socket socket = new Socket(HOST, PORT);
