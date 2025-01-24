@@ -1,38 +1,29 @@
 package chat;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Channel {
-	private String name;
-	private ArrayList<User> users;
+	private final String name;
+	private HashSet<User> userList = new HashSet<User>();
+	
+	public String getName() {return name;}
 	
 	
 	public Channel(String name) {
-		super();
 		this.name = name;
 	}
 	
-	public String getName() {return name;}
-	public ArrayList<User> getUsers() {return users;}
-	
-	public void setName(String name) {this.name = name;}
-	public void setUsers(ArrayList<User> users) {this.users = users;}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (obj.getClass() != this.getClass()) {
-			return false;
-		}
-		Channel channel = (Channel) obj;
-		if (channel.getName() != this.getName()) {
-			return false;
-		}
-		return true;
+	public void subscribe(User user) {
+		userList.add(user);
+		user.getChannelList().add(this);
 	}
 	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+	public void unSubscribe(User user) {
+		userList.remove(user);
+		user.getChannelList().remove(this);
+	}
+	
+	public void mensaje(String msg, User sender) {
+		//TODO: Enviar mensaje a todos los usuarios
 	}
 }
