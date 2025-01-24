@@ -9,10 +9,11 @@ public class Channel {
 	public String getName() {return name;}
 	
 	
-	public Channel(String name) {
+	Channel(String name) {
 		this.name = name;
 	}
 	
+	// Patron Observer
 	public void subscribe(User user) {
 		userList.add(user);
 		user.getChannelList().add(this);
