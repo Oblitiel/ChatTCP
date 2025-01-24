@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
 	final static int PORT = 5000;
-	final static int POOL_SIZE = 100;
+	final static int POOL_SIZE = 30;
 	
 	private static ServerSocket servidor = null;
 	private static final ExecutorService pool = Executors.newFixedThreadPool(POOL_SIZE);
