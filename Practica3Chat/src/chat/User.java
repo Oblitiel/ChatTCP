@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import server.ServerHandler;
 
 public class User {
+	//Prueba
 	private String nick;
 	private ServerHandler handler;
 	private ArrayList<Channel> channelsSub = new ArrayList<>();
